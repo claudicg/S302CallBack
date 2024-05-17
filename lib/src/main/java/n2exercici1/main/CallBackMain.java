@@ -7,7 +7,7 @@ public class CallBackMain {
 	public static void main(String[] args) {
 		
 		ShoeShopHandler shoeShop = new ShoeShopHandler();
-		shoeShop.runWayToPay();
+		shoeShop.runPayment();
 	}
 
 }

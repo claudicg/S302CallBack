@@ -2,34 +2,24 @@ package n2exercici1.handlers;
 
 import java.util.Scanner;
 
+import n2exercici1.beans.PaymentGateway;
 import n2exercici1.beans.CreditCardPayment;
 import n2exercici1.beans.DebitCardPayment;
 import n2exercici1.beans.PayPalPayment;
-import n2exercici1.beans.ShoeShop;
 import n2exercici1.utils.Constants;
 import n2exercici1.utils.Validations;
 
 public class ShoeShopHandler {
 	
 	private Scanner scanner;
-	private ShoeShop shoeShop;
 	
 	public ShoeShopHandler() {
 		super();
 		this.scanner = new Scanner(System.in);
-		this.shoeShop = new ShoeShop();
-	}
-	
-	public ShoeShop getShoeShop() {
-		return shoeShop;
-	}
-
-	public void setShoeShop(ShoeShop shoeShop) {
-		this.shoeShop = shoeShop;
 	}
 
 
-	public void runWayToPay() {
+	public void runPayment() {
 		
 		System.out.println(Constants.Messages.CHOOSE);
 		System.out.println(Constants.Menu.PAYMENT_MENU);
@@ -43,19 +33,23 @@ public class ShoeShopHandler {
 			
 		} while(!Validations.isValidOption(menuOption));
 		
+		PaymentGateway payment = null;
+		
 		switch(menuOption) {
 			case "1":
-				shoeShop.makePurchase(new CreditCardPayment());
+				payment = new CreditCardPayment();
 				break;
 			case "2":
-				shoeShop.makePurchase(new DebitCardPayment());
+				payment = new DebitCardPayment();
 				break;
 			case "3":
-				shoeShop.makePurchase(new PayPalPayment());
+				payment = new PayPalPayment();
 				break;
 			default:
 				break;
 		}
+		payment.executeWith(()-> System.out.println(Constants.Messages.CALL_BACK));
+		
 		scanner.close();
 	}
 }
